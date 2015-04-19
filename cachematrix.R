@@ -8,20 +8,27 @@
 #
 # See my alternative version in "cachematrix2.R".
 
+
+# Initialize a "CacheMatrix" object with methods getting
+# and setting a matrix, and its inverse.
 makeCacheMatrix <- function(x = matrix()) {
     # The cache of the inverse of x. 
     xInv <- NULL
     list(
+        # Stores a matrix in this CacheMatrix.
         set = function(m) {
             x <<- m
             xInv <<- NULL
         },
+        # Retrieves the matrix stored in this CacheMatrix.
         get = function() {
             x
         },
+        # Stores a matrix inverse in this CacheMatrix.
         setInverse = function(inv) {
             xInv <<- inv
         },
+        # Retrieves the matrix inverse stored in this CacheMatrix.
         getInverse = function() {
             xInv
         }
@@ -29,6 +36,8 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 # Compute the cache inverse of CacheMatrix cm.
+# The matrix inverse cache of cm will be updated if not set
+# and simply returned without recomputation if it is already set.
 cacheSolve <- function(cm, ...) {
     inv <- cm$getInverse()
     if (!is.null(inv)) {
